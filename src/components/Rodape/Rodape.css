@@ -1,0 +1,21 @@
+.rodape {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #6278F7;
+    padding: 16px;
+}
+
+.rodape .imagens ul {
+    display: flex;
+    gap: 16px;
+    list-style: none;
+}
+
+.rodape section {
+    align-self: center;
+}
+
+.rodape section p {
+    color: #ffffff;
+    align-self: center;
+}
