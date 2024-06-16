@@ -1,8 +1,29 @@
 .banner {
-    background-color: #6278F7;
+    box-sizing: border-box;
+    background-blend-mode: multiply;
+    background-color: var(--cor-principal);
     text-align: center;
+    min-height: 25vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.banner img {
-    max-width: 100%;
+.link {
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 18px;
+    background-color: var(--cor-secundaria);
+    color: #fff;
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.link:hover {
+    color: var(--cor-principal);
+}
+
+.banner h1 {
+    color: #fff;
 }

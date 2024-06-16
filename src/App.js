@@ -3,56 +3,122 @@ import Banner from './components/Banner';
 import Formulario from './components/Formulario';
 import Time from './components/Time';
 import Rodape from './components/Rodape';
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
-  const times = [
+  const [times, setTimes] = useState([
     {
+      id: uuidv4(),
       nome: 'Top Laners',
-      corPrimaria: '#82CFFA',
-      corSecundaria: '#E8F8FF'
+      cor: '#82CFFA',
     },
     {
+      id: uuidv4(),
       nome: 'Caçadores',
-      corPrimaria: '#57C278',
-      corSecundaria: '#D9F7E9'
+      cor: '#57C278'
     },
     {
+      id: uuidv4(),
       nome: 'Mid Laners',
-      corPrimaria: '#E06B69',
-      corSecundaria: '#FDE7E8'
+      cor: '#E06B69'
     },
     {
+      id: uuidv4(),
       nome: 'Atiradores',
-      corPrimaria: '#FF8A29',
-      corSecundaria: '#FFEEDF'
+      cor: '#FF8A29'
     },
     {
+      id: uuidv4(),
       nome: 'Suportes',
-      corPrimaria: '#FFBA05',
-      corSecundaria: '#FFF5D9'
+      cor: '#FFBA05'
     }
-  ];
+  ]);
 
-  const [colaboradores, setColaboradores] = useState([]);
+  const [colaboradores, setColaboradores] = useState([
+    {
+      id: uuidv4(),
+      nome: 'Gabriel',
+      mainPersonagem: 'Katarina',
+      imagem: 'https://github.com/GabrielBitral.png',
+      time: 'Mid Laners'
+    },
+    {
+      id: uuidv4(),
+      nome: 'Gabriel',
+      mainPersonagem: 'Kindred',
+      imagem: 'https://github.com/GabrielBitral.png',
+      time: 'Caçadores'
+    },
+    {
+      id: uuidv4(),
+      nome: 'Gabriel',
+      mainPersonagem: 'Fiora',
+      imagem: 'https://github.com/GabrielBitral.png',
+      time: 'Top Laners'
+    },
+    {
+      id: uuidv4(),
+      nome: 'Gabriel',
+      mainPersonagem: 'Vayne',
+      imagem: 'https://github.com/GabrielBitral.png',
+      time: 'Atiradores'
+    }
+  ]);
 
   const aoNovoColaboradorAdicionado = (colaborador) => {
+    colaborador.id = uuidv4();
+    colaborador.favorito = false;
     setColaboradores([...colaboradores, colaborador]);
+  };
+
+  const aoDeletarColaborador = (id) => {
+    setColaboradores(colaboradores.filter(colaborador => colaborador.id !== id));
+  };
+
+  const mudarCorDoTime = (cor, id) => {
+    setTimes(times.map(time => {
+      if (time.id === id) {
+        time.cor = cor;
+      }
+
+      return time;
+    }));
+  };
+
+  const aoNovoTimeAdicionado = (novoTime) => {
+    setTimes([...times, { ...novoTime, id: uuidv4() }]);
+  };
+
+  const resolverFavorito = (id) => {
+    setColaboradores(colaboradores.map(colaborador => {
+      if (colaborador.id === id) {
+        colaborador.favorito = !colaborador.favorito;
+      }
+      return colaborador;
+    })
+    )
   };
 
   return (
     <div className="App">
-      <head>
-        <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
-      </head>
       <Banner />
-      <Formulario times={times.map(time => time.nome)} aoNovoColaboradorCadastrado={aoNovoColaboradorAdicionado} />
-      {times.map(time => <Time
-        key={time.nome}
-        nome={time.nome}
-        corPrimaria={time.corPrimaria}
-        corSecundaria={time.corSecundaria}
-        colaboradores={colaboradores.filter(colaborador => colaborador.time === time.nome)}
-      />)}
+      <Formulario
+        times={times.map(time => time.nome)}
+        aoCadastrarTime={aoNovoTimeAdicionado}
+        aoNovoColaboradorCadastrado={aoNovoColaboradorAdicionado}
+      />
+      <div id='times'>
+        {times.map(time =>
+          <Time
+            key={time.id}
+            time={time}
+            colaboradores={colaboradores.filter(colaborador => colaborador.time === time.nome)}
+            aoDeletar={aoDeletarColaborador}
+            aoMudarCorTime={mudarCorDoTime}
+            aoFavoritar={resolverFavorito}
+          />
+        )}
+      </div>
       <Rodape />
     </div>
   );
