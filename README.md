@@ -22,4 +22,5 @@ Projeto de um site para cadastros de times de jogadores de MOBA, utilizando e ap
 
 ![image](https://github.com/GabrielBitral/react-organo/assets/77023882/fe24829a-8a9f-4e90-ac8e-5aad4cfed896)
 
-![image](https://github.com/GabrielBitral/react-organo/assets/77023882/63bb12af-c177-408c-8e32-0e9977a2b0fd)
+![image](https://github.com/GabrielBitral/react-organo/assets/77023882/825b0fdd-2181-49dd-a376-e8ed379a0ed1)
+
