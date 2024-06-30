@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useReducer } from 'react';
 import Banner from './components/Banner';
 import Formulario from './components/Formulario';
 import Time from './components/Time';
 import Rodape from './components/Rodape';
+import reducer, { ADICIONAR_COLABORADOR, EXCLUIR_COLABORADOR, FAVORITAR_COLABORADOR } from './reducer';
 import { v4 as uuidv4 } from 'uuid';
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
     }
   ]);
 
-  const [colaboradores, setColaboradores] = useState([
+  const [colaboradores, dispatch] = useReducer(reducer, [
     {
       id: uuidv4(),
       nome: 'Gabriel',
@@ -68,11 +69,17 @@ function App() {
   const aoNovoColaboradorAdicionado = (colaborador) => {
     colaborador.id = uuidv4();
     colaborador.favorito = false;
-    setColaboradores([...colaboradores, colaborador]);
+    dispatch({
+      tipo: ADICIONAR_COLABORADOR,
+      colaborador
+    });
   };
 
   const aoDeletarColaborador = (id) => {
-    setColaboradores(colaboradores.filter(colaborador => colaborador.id !== id));
+    dispatch({
+      tipo: EXCLUIR_COLABORADOR,
+      id
+    });
   };
 
   const mudarCorDoTime = (cor, id) => {
@@ -90,13 +97,10 @@ function App() {
   };
 
   const resolverFavorito = (id) => {
-    setColaboradores(colaboradores.map(colaborador => {
-      if (colaborador.id === id) {
-        colaborador.favorito = !colaborador.favorito;
-      }
-      return colaborador;
-    })
-    )
+    dispatch({
+      tipo: FAVORITAR_COLABORADOR,
+      id
+    });
   };
 
   return (
